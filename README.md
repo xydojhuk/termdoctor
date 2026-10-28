@@ -145,8 +145,6 @@ python -m pytest -q
 python -m build --wheel
 ```
 
-A GitHub Actions workflow is provided in `.github/workflows/tests.yml` for Linux, Windows, and macOS (Python 3.10–3.13). Passing CI on one set of dependency versions does not prove compatibility with every older version permitted by dependency ranges.
-
 ## Tech stack
 
 **Python 3.10+**, [Typer](https://typer.tiangolo.com/), [Rich](https://rich.readthedocs.io/), and [PyYAML](https://pyyaml.org/). TermDoctor uses a rule-based Python diagnostic engine; no AI service is required.
