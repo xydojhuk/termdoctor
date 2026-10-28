@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
 authors = [
-    { name = "notimechoki" }
+    { name = "xydojhuk" }
 ]
 keywords = [
     "cli",
@@ -49,11 +49,12 @@ dev = [
 
 [project.scripts]
 termdoctor = "termdoctor.cli:main"
+td = "termdoctor.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/notimechoki/termdoctor"
-Repository = "https://github.com/notimechoki/termdoctor"
-Issues = "https://github.com/notimechoki/termdoctor/issues"
+Homepage = "https://github.com/xydojhuk/termdoctor"
+Repository = "https://github.com/xydojhuk/termdoctor"
+Issues = "https://github.com/xydojhuk/termdoctor/issues"
 
 [tool.setuptools.packages.find]
 where = ["src"]

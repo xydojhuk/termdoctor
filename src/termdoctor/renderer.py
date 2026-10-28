@@ -4,6 +4,7 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
 
+from termdoctor import __version__
 from termdoctor.core.history import format_history_time, trim_text
 from termdoctor.i18n import tr
 from termdoctor.models import (
@@ -56,7 +57,8 @@ def render_diagnosis(
     console.print(
         Panel(
             build_error_summary(parsed_error, command_result),
-            title=f"[bold red]{tr('diagnosis.detected_title', language=language_name, error_type=parsed_error.error_type)}[/bold red]",
+            title=(f"[bold red]TermDoctor v{__version__} · {parsed_error.error_type}[/bold red]"
+                   f"  [dim]{tr('diagnosis.detected_title', language=language_name, error_type=parsed_error.error_type)}[/dim]"),
             border_style="red",
         )
     )

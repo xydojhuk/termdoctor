@@ -1,403 +1,180 @@
 <p align="center">
-  <img src="assets/banner.png" alt="TermDoctor banner" width="100%">
+  <img src="assets/banner.png" alt="TermDoctor" width="100%">
 </p>
 
 <h1 align="center">TermDoctor</h1>
 
 <p align="center">
-  <strong>A multilingual CLI assistant that explains Python terminal errors and suggests practical fixes.</strong>
+  <strong>Understand Python errors directly in your terminal.</strong><br>
+  A local, multilingual debugging assistant that explains what went wrong and helps you find the cause.
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.10+">
-  <img src="https://img.shields.io/badge/Typer-CLI-009688?style=for-the-badge" alt="Typer">
-  <img src="https://img.shields.io/badge/Rich-Terminal_UI-4B8BBE?style=for-the-badge" alt="Rich">
-  <img src="https://img.shields.io/badge/Version-0.3.1-blue?style=for-the-badge" alt="Version 0.3.1">
-  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="MIT License">
+  <a href="https://github.com/xydojhuk/termdoctor/releases"><img alt="Latest published release" src="https://img.shields.io/github/v/release/xydojhuk/termdoctor?include_prereleases&style=flat-square"></a>
+  <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/github/license/xydojhuk/termdoctor?style=flat-square"></a>
 </p>
 
----
+<!-- Add the CI badge after .github/workflows/tests.yml is pushed and has run successfully:
+<a href="https://github.com/xydojhuk/termdoctor/actions/workflows/tests.yml"><img alt="Tests" src="https://github.com/xydojhuk/termdoctor/actions/workflows/tests.yml/badge.svg"></a>
+-->
 
-## What is TermDoctor?
+## Features
 
-**TermDoctor** is a command-line debugging assistant for Python projects.
+- **Short commands:** `td main.py` or `termdoctor main.py` instead of wrapping every Python call manually.
+- **Python traceback diagnosis:** identify exceptions, show source context when available, and suggest possible causes and fixes.
+- **Python project context:** inspect interpreters, virtual environments, dependency files, and project structure.
+- **Framework-aware rules:** Django, FastAPI, Flask, Pydantic, SQLAlchemy, Alembic, pytest, aiogram, and pyTelegramBotAPI.
+- **Two interface languages:** English (`en`) and Russian (`ru`).
+- **Local operation:** no account, cloud API, or network connection needed for diagnostics.
+- **Privacy-conscious defaults:** failure history is **off** unless you turn it on.
 
-It can run a command, capture both `stdout` and `stderr`, parse a Python traceback, identify the most relevant rule, inspect the project environment, and explain the problem in English or Russian.
+TermDoctor currently diagnoses **Python** errors. It is a diagnostic helper, not an automatic code fixer; suggestions may require verification against your project.
 
-Version **0.3.1** is focused on making the Python engine reliable before additional programming-language engines are introduced.
+## Screenshots
 
-Current stable engine:
+_Screenshots will be added after the CLI examples are captured._
 
-| Engine | Status |
-|---|---|
-| Python | Supported |
-
-Interface languages:
-
-| Language | Code | Aliases |
-|---|---|---|
-| English | `en` | `eng`, `english` |
-| Russian | `ru` | `rus`, `russian`, `рус`, `русский` |
-
----
-
-## Highlights in 0.3.1
-
-- 105 Python diagnosis rules with complete English and Russian explanations.
-- Strict rule matching that avoids false framework diagnoses.
-- Correct separation between interface language (`--lang`) and programming-language engine (`--engine`).
-- Detection of `python3.10`, `python3.13`, Windows `python.exe`/`pytest.exe`, and common environment runners.
-- ANSI-colored traceback support.
-- Custom exception class support, including names that do not end in `Error`.
-- Full traceback frame collection, exception chains, and source-code context.
-- More precise `TypeError`, `ValueError`, `ImportError`, and `AttributeError` diagnosis.
-- Smarter `ModuleNotFoundError` handling for standard-library and local project modules.
-- Improved framework detection for Django, FastAPI, Flask, Pydantic, SQLAlchemy, Alembic, pytest, aiogram, and pyTelegramBotAPI.
-- Dependency reading from multiple requirements files, nested includes, PEP 621 optional dependencies, dependency groups, Poetry sections, and Pipfile.
-- Safer history storage with output limits, secret redaction, serialized atomic writes, and `--no-history`.
-- Markdown reports use the original error working directory instead of whichever directory is currently open.
-
----
-
-## Requirements
-
-- Python 3.10 or newer
-
----
+<!-- Screenshot slots: replace this note with real images when available.
+     Store captures in assets/screenshots/ and use descriptive alt text.
+     Example paths: assets/screenshots/diagnosis-en.png, assets/screenshots/diagnosis-ru.png.
+     Avoid exposing API keys, private file paths, or other secrets in screenshots.
+-->
 
 ## Installation
 
-### Install from GitHub with pipx
+**Requirement:** Python 3.10 or newer. The `td` command is installed together with `termdoctor`.
+
+Recommended installation with [pipx](https://pipx.pypa.io/):
 
 ```bash
-pipx install git+https://github.com/notimechoki/termdoctor.git
+pipx install git+https://github.com/xydojhuk/termdoctor.git
 ```
 
-Check the installation:
+Check the installed command:
 
 ```bash
-termdoctor --version
-termdoctor --help
+td --version
+td --help
 ```
 
-### Install from a local clone
+You can also install from a local checkout (including a development branch):
 
 ```bash
-git clone https://github.com/notimechoki/termdoctor.git
+git clone https://github.com/xydojhuk/termdoctor.git
 cd termdoctor
-
-python -m venv .venv
-source .venv/bin/activate
-
-python -m pip install -e .
-termdoctor --help
+pipx install .
 ```
 
-Windows PowerShell activation:
+> **Releases:** the badge above shows the latest published GitHub Release. Installation from the default branch uses its current source, which may differ from the most recent tagged release.
 
-```powershell
-.venv\Scripts\Activate.ps1
-```
-
-### Development installation
-
-```bash
-git clone https://github.com/notimechoki/termdoctor.git
-cd termdoctor
-
-python -m venv .venv
-source .venv/bin/activate
-python -m pip install -e ".[dev]"
-
-pytest
-```
-
----
-
-## Interface language
-
-Use a language for one command:
-
-```bash
-termdoctor --lang ru explain error.txt
-termdoctor --lang rus run -- python main.py
-termdoctor --lang en doctor python
-```
-
-Save a default language:
-
-```bash
-termdoctor config language ru
-termdoctor config language
-```
-
-Or use an environment variable:
-
-```bash
-TERMDOCTOR_LANG=ru termdoctor explain error.txt
-```
-
-Language resolution order:
-
-1. global `--lang` option;
-2. `TERMDOCTOR_LANG` environment variable;
-3. saved TermDoctor configuration;
-4. system locale;
-5. English fallback.
-
-Unknown translation keys safely fall back to English.
-
----
-
-## Commands
-
-| Command | Description |
-|---|---|
-| `termdoctor --help` | Show CLI help |
-| `termdoctor --version` | Show the installed version |
-| `termdoctor languages` | Show interface languages and registered engines |
-| `termdoctor run -- python main.py` | Run a command and diagnose failure |
-| `termdoctor run --no-history -- python main.py` | Diagnose without saving output to history |
-| `termdoctor explain error.txt` | Explain a traceback from a file |
-| `termdoctor explain error.txt --engine python` | Force the Python engine |
-| `termdoctor paste` | Read a traceback from stdin |
-| `termdoctor report last` | Generate a Markdown report from the latest saved failure |
-| `termdoctor report error.txt -o report.md` | Write a report to a file |
-| `termdoctor env` | Inspect the current Python project environment |
-| `termdoctor doctor python` | Run project-level Python checks |
-| `termdoctor history` | Show saved failed commands |
-| `termdoctor clear` | Clear saved history |
-| `termdoctor config language ru` | Save the default interface language |
-
-`--lang python` after `explain`, `paste`, or `report` is retained as a compatibility alias for the old 0.3.0 engine option. New usage should prefer `--engine python` and reserve the global `--lang` option for the interface language.
-
----
-
-## Examples
+## Usage
 
 ### Run a Python file
 
 ```bash
-termdoctor run -- python examples/name_error.py
+td main.py
+termdoctor main.py
+td "my script.py" "argument with spaces"
 ```
 
-### Run with Russian explanations
+TermDoctor runs the script using an active virtual environment when available, otherwise a detected project virtual environment or a Python interpreter from `PATH`. It shows normal program output and, if Python fails, prints a diagnosis. Interactive scripts using `input()` are supported.
+
+### Choose an explanation language
 
 ```bash
-termdoctor --lang ru run -- python examples/name_error.py
+td set lang ru       # Save Russian
+td set lang en       # Save English
+td config            # Show current settings
+td --lang ru main.py # Use Russian for this run only
 ```
 
-### Explain a saved traceback
+`td change lang ru` is also accepted as an alias for `td set lang ru`.
+
+### Inspect an error or environment
 
 ```bash
-termdoctor explain examples/framework_tracebacks/django_no_reverse_match.txt
-termdoctor explain examples/framework_tracebacks/fastapi_response_validation_error.txt
-termdoctor explain examples/framework_tracebacks/sqlalchemy_operational_error.txt
+td explain error.txt
+td doctor python
+td env
 ```
 
-### Force the Python engine
+### Run a command explicitly
 
 ```bash
-termdoctor explain error.txt --engine python
+td run -- python -m pytest
+td run --timeout 10 -- python main.py
 ```
 
-### Generate a report
+The original `termdoctor run -- python main.py` syntax remains available for compatibility.
+
+<details>
+<summary>Additional CLI commands and machine-readable output</summary>
 
 ```bash
-termdoctor run -- python examples/name_error.py
-termdoctor --lang ru report last --output reports/name-error.md
+td explain error.txt --format json
+td run --format json -- python main.py
+td report error.txt -o report.md
+td paste
+td history
+td clear
 ```
 
-### Inspect the project
+JSON output is intended for integrations, not regular terminal reading. The JSON run mode captures output and does not provide the same interactive behavior as the default text mode.
+
+To save failed runs explicitly:
 
 ```bash
-termdoctor env
-termdoctor doctor python
+td set history on
+td set history off
 ```
 
----
+Saved history is stored locally in `~/.termdoctor/history.json` (or the current user's home directory equivalent). Upgrading does **not** delete existing history. Redaction is best-effort, not a guarantee; avoid turning on history for sensitive commands.
 
-## Python diagnosis
+</details>
 
-### Traceback parsing
+## Development and testing
 
-The Python engine supports:
-
-- standard Python tracebacks;
-- ANSI-colored terminal output;
-- dotted exception names such as `sqlalchemy.exc.OperationalError`;
-- user-defined exceptions such as `Boom`;
-- chained exceptions;
-- `ExceptionGroup` output;
-- all discovered traceback frames;
-- nearby source lines when the file is available;
-- preference for a project frame over a final `site-packages` frame.
-
-### Rule matching
-
-Specialized rules are selected only when their evidence actually matches. A rule may use:
-
-- `match_any`;
-- `match_all`;
-- `exclude`;
-- exact `full_error_types`;
-- framework constraints;
-- numeric priority.
-
-If a specialized rule does not match, TermDoctor uses a generic fallback only when one exists. It no longer returns the first rule merely because the short exception class name is the same.
-
-### Framework and ecosystem context
-
-| Ecosystem | Support |
-|---|---|
-| Django | Supported |
-| FastAPI | Supported |
-| Flask | Supported |
-| Pydantic | Supported |
-| SQLAlchemy | Supported |
-| Alembic | Supported |
-| pytest | Supported |
-| aiogram | Supported |
-| pyTelegramBotAPI | Supported |
-
-Primary dependencies prove framework detection. Supporting packages are only additional evidence. For example, installing Pydantic alone no longer marks a project as FastAPI.
-
-### Dependency files
-
-TermDoctor reads dependencies from:
-
-- `requirements.txt`;
-- `requirements-dev.txt` and other `requirements*.txt` files;
-- nested `-r` and `--requirement` includes;
-- PEP 621 `project.dependencies`;
-- PEP 621 optional dependencies;
-- dependency groups;
-- Poetry dependencies and groups;
-- `Pipfile` packages and dev-packages;
-- VCS requirements with `#egg=` or PEP 508 direct references.
-
-### Missing modules
-
-For `ModuleNotFoundError`, TermDoctor checks whether the import is:
-
-- part of the standard library;
-- a local module in the project or `src/` layout;
-- listed in requirements or project metadata;
-- known under a different installation name.
-
-Install suggestions use the active interpreter form:
+Clone the repository, create a virtual environment, and install development dependencies:
 
 ```bash
-/path/to/python -m pip install package
+git clone https://github.com/xydojhuk/termdoctor.git
+cd termdoctor
+python -m venv .venv
 ```
 
-This avoids accidentally installing into a different Python environment.
-
----
-
-## History and privacy
-
-Failed commands are stored in:
-
-```text
-~/.termdoctor/history.json
-```
-
-TermDoctor 0.3.1:
-
-- keeps at most 30 items;
-- limits saved output size;
-- redacts common tokens, passwords, API keys, bearer tokens, and credentials inside common database URLs;
-- serializes concurrent updates and writes history atomically;
-- attempts to use private directory/file permissions;
-- backs up malformed history before starting a new file;
-- supports `--no-history` for sensitive runs.
-
-Automatic redaction is a safety layer, not a guarantee that every custom secret format can be recognized. Use `--no-history` for commands that may print sensitive information.
-
----
-
-## Architecture
-
-```text
-src/termdoctor/
-├── cli.py
-├── i18n.py
-├── models.py
-├── renderer.py
-├── report.py
-├── locales/
-│   ├── en.yml
-│   └── ru.yml
-├── core/
-│   ├── history.py
-│   ├── platform_utils.py
-│   ├── project.py
-│   └── runner.py
-└── engines/
-    ├── base.py
-    ├── detector.py
-    ├── registry.py
-    └── python/
-        ├── dependencies.py
-        ├── engine.py
-        ├── environment.py
-        ├── frameworks.py
-        ├── matcher.py
-        ├── package_hints.py
-        ├── parser.py
-        ├── rules.yml
-        ├── rules.ru.yml
-        └── rules_loader.py
-```
-
-`EngineDiagnosis` exposes generic diagnostic sections, while engine-specific context remains available for compatibility and detailed reports. This keeps the renderer from needing a new hard-coded table for every future language engine.
-
----
-
-## Development
-
-Run the complete test suite:
+Activate the environment for your shell:
 
 ```bash
-pytest
+# Linux / macOS (bash, zsh)
+source .venv/bin/activate
+# Linux / macOS (fish): source .venv/bin/activate.fish
+# Windows PowerShell: .venv\Scripts\Activate.ps1
 ```
 
-Run coverage:
+Then run:
 
 ```bash
-pytest --cov=termdoctor --cov-report=term-missing
+python -m pip install -e '.[dev]'
+python -m pytest -q
+python -m build --wheel
 ```
 
-Build release artifacts:
+A GitHub Actions workflow is provided in `.github/workflows/tests.yml` for Linux, Windows, and macOS (Python 3.10–3.13). Passing CI on one set of dependency versions does not prove compatibility with every older version permitted by dependency ranges.
 
-```bash
-python -m build
-```
+## Tech stack
 
-Useful manual checks:
+**Python 3.10+**, [Typer](https://typer.tiangolo.com/), [Rich](https://rich.readthedocs.io/), and [PyYAML](https://pyyaml.org/). TermDoctor uses a rule-based Python diagnostic engine; no AI service is required.
 
-```bash
-termdoctor --version
-termdoctor languages
-termdoctor --lang ru run -- python examples/name_error.py
-termdoctor explain examples/framework_tracebacks/django_no_reverse_match.txt
-termdoctor report examples/framework_tracebacks/django_no_reverse_match.txt -o report.md
-termdoctor doctor python
-```
+## Contributing
 
----
+Bug reports and focused pull requests are welcome. Please include your Python version, operating system, the command you ran, expected vs. actual behavior, and a minimal reproducible example **without secrets**. Run the tests before opening a pull request.
 
-## Changelog
+For ordinary bugs and feature requests, use [GitHub Issues](https://github.com/xydojhuk/termdoctor/issues). For security issues, follow the private-reporting guidance below instead.
 
-See [CHANGELOG.md](CHANGELOG.md).
+## Security
+
+Read [SECURITY.md](SECURITY.md) before reporting a potential vulnerability. Do **not** publish exploits, credentials, or sensitive tracebacks in public issues.
 
 ## License
 
-MIT License.
-
-## Author
-
-Created by [notimechoki](https://github.com/notimechoki).
-
----
+TermDoctor is available under the [MIT License](LICENSE).

@@ -2,8 +2,8 @@ app:
   help: "Explain Python terminal errors and suggest practical fixes."
   doctor_help: "Run project-level diagnostics."
 common:
-  yes: "yes"
-  no: "no"
+  "yes": "yes"
+  "no": "no"
   found: "found"
   not_found: "not found"
   active: "active"

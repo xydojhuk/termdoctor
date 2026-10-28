@@ -1,6 +1,30 @@
 # Changelog
 
-## 0.3.1 - Reliable Python Diagnosis and Localization
+All notable changes to TermDoctor are tracked here. Entries under **Unreleased** describe work that is not yet part of a published release.
+
+## 0.4.0 - CLI foundation (2026-10-28)
+
+### Added
+
+- Short `td` command and `td file.py` / `termdoctor file.py` shortcuts.
+- `set lang`, `set history`, and `config` commands; `change` is an alias for `set`.
+- Streaming stdout/stderr with inherited stdin for interactive scripts.
+- Optional execution timeout and handling of Ctrl+C.
+- Interpreter-aware Python environment probe.
+- Structured JSON diagnosis for future integrations (`--format json`).
+- Multi-platform GitHub Actions test matrix and regression tests.
+
+### Changed
+
+- History is opt-in; existing history files are left untouched.
+- Diagnosis title includes the TermDoctor version.
+- Repository URLs point to `xydojhuk/termdoctor`.
+
+### Fixed
+
+- YAML boolean-like translation keys for common yes/no.
+
+## 0.3.1 - Reliable Python Diagnosis and Localization (2026-07-17)
 
 ### Added
 
