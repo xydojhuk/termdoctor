@@ -12,11 +12,9 @@
 <p align="center">
   <a href="https://github.com/xydojhuk/termdoctor/releases"><img alt="Latest published release" src="https://img.shields.io/github/v/release/xydojhuk/termdoctor?include_prereleases&style=flat-square"></a>
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/github/license/xydojhuk/termdoctor?style=flat-square"></a>
+  <a href="https://github.com/xydojhuk/termdoctor/actions/workflows/tests.yml"><img alt="Tests" src="https://github.com/xydojhuk/termdoctor/actions/workflows/tests.yml/badge.svg"></a>
 </p>
 
-<!-- Add the CI badge after .github/workflows/tests.yml is pushed and has run successfully:
-<a href="https://github.com/xydojhuk/termdoctor/actions/workflows/tests.yml"><img alt="Tests" src="https://github.com/xydojhuk/termdoctor/actions/workflows/tests.yml/badge.svg"></a>
--->
 
 ## Features
 
