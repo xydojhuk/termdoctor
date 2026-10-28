@@ -52,5 +52,6 @@ class BaseEngine(ABC):
         command_result: CommandResult | None = None,
         cwd: Path | None = None,
         locale: str | None = None,
+        python_executable: str | None = None,
     ) -> EngineDiagnosis | None:
         raise NotImplementedError

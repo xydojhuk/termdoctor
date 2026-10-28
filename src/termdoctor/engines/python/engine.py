@@ -148,6 +148,7 @@ class PythonEngine(BaseEngine):
         command_result: CommandResult | None = None,
         cwd: Path | None = None,
         locale: str | None = None,
+        python_executable: str | None = None,
     ) -> EngineDiagnosis | None:
         parsed_error = self.parse_error(text)
         if parsed_error is None:
@@ -155,13 +156,13 @@ class PythonEngine(BaseEngine):
 
         diagnosis_cwd = cwd or (Path(command_result.cwd) if command_result else Path.cwd())
         attach_source_context(parsed_error, diagnosis_cwd)
-        environment = get_python_environment(diagnosis_cwd)
+        environment = get_python_environment(diagnosis_cwd, python_executable)
         rule = self.find_rule(parsed_error, locale=locale)
         module_context = None
         if parsed_error.error_type == "ModuleNotFoundError":
             module_name = parsed_error.extracted.get("module")
             if module_name:
-                module_context = build_module_diagnosis_context(module_name, diagnosis_cwd)
+                module_context = build_module_diagnosis_context(module_name, diagnosis_cwd, python_executable)
 
         framework_context = build_framework_diagnosis_context(
             parsed_error,

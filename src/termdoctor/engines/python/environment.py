@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import json
 import os
+import subprocess
 import sys
 from pathlib import Path
 
@@ -18,23 +20,53 @@ from termdoctor.models import (
 )
 
 
-def get_python_environment(cwd: Path | None = None) -> PythonEnvironment:
+def probe_python(executable: str | None) -> dict[str, str] | None:
+    """Read the *target* Python environment rather than pipx's interpreter."""
+    if not executable:
+        return None
+    script = (
+        "import json,os,sys; print(json.dumps({"
+        "'executable':sys.executable,'version':'.'.join(map(str,sys.version_info[:3])),"
+        "'prefix':sys.prefix,'base_prefix':sys.base_prefix,"
+        "'venv':sys.prefix if sys.prefix!=sys.base_prefix else ''}))"
+    )
+    try:
+        result = subprocess.run([executable, "-c", script], capture_output=True,
+                                text=True, timeout=4, check=True)
+        data = json.loads(result.stdout)
+        return data if isinstance(data, dict) else None
+    except (OSError, subprocess.SubprocessError, ValueError):
+        return None
+
+
+def get_python_environment(cwd: Path | None = None, python_executable: str | None = None) -> PythonEnvironment:
     current_dir = (cwd or Path.cwd()).resolve()
     project_root = find_project_root(current_dir)
     dependency_info = collect_dependency_info(project_root)
     framework_info = detect_frameworks(project_root, dependency_info.all_dependencies)
 
-    active_venv_path = get_active_venv_path()
+    probe = probe_python(python_executable)
+    target_executable = str(probe.get("executable")) if probe else (python_executable or sys.executable)
+    if probe:
+        active_venv_path = str(probe.get("venv") or "") or (
+            str(probe["prefix"]) if probe.get("prefix") != probe.get("base_prefix") else None
+        )
+        venv_active = bool(active_venv_path)
+        version = str(probe.get("version") or "unknown")
+    else:
+        active_venv_path = get_active_venv_path() if python_executable is None else None
+        venv_active = is_venv_active() if python_executable is None else False
+        version = get_python_version() if python_executable is None else "unknown"
     project_venv_path = find_project_venv(project_root)
     activation_command = get_activation_command(project_venv_path)
 
     return PythonEnvironment(
-        python_version=get_python_version(),
-        python_executable=sys.executable,
+        python_version=version,
+        python_executable=target_executable,
         current_dir=str(current_dir),
         project_root=str(project_root),
         cwd=str(current_dir),
-        venv_active=is_venv_active(),
+        venv_active=venv_active,
         active_venv_path=active_venv_path,
         project_venv_path=project_venv_path,
         activation_command=activation_command,
@@ -110,9 +142,9 @@ def find_local_module(module_name: str, project_root: Path, current_dir: Path) -
     return None
 
 
-def build_module_diagnosis_context(module_name: str, cwd: Path | None = None) -> ModuleDiagnosisContext:
+def build_module_diagnosis_context(module_name: str, cwd: Path | None = None, python_executable: str | None = None) -> ModuleDiagnosisContext:
     current_dir = (cwd or Path.cwd()).resolve()
-    environment = get_python_environment(current_dir)
+    environment = get_python_environment(current_dir, python_executable)
     top_level = get_top_level_module(module_name)
     package_hint = get_package_hint(top_level)
     package_name = get_install_name(top_level)

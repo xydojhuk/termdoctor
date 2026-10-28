@@ -139,3 +139,14 @@ def tr(key: str, locale: str | None = None, **params: Any) -> str:
         return value.format(**params)
     except (KeyError, ValueError):
         return value
+
+
+def history_enabled() -> bool:
+    """History is opt-in; old history files are never deleted automatically."""
+    return load_config().get("history_enabled") is True
+
+
+def save_history_enabled(value: bool) -> None:
+    config = load_config()
+    config["history_enabled"] = value
+    save_config(config)
