@@ -28,16 +28,6 @@
 
 TermDoctor currently diagnoses **Python** errors. It is a diagnostic helper, not an automatic code fixer; suggestions may require verification against your project.
 
-## Screenshots
-
-_Screenshots will be added after the CLI examples are captured._
-
-<!-- Screenshot slots: replace this note with real images when available.
-     Store captures in assets/screenshots/ and use descriptive alt text.
-     Example paths: assets/screenshots/diagnosis-en.png, assets/screenshots/diagnosis-ru.png.
-     Avoid exposing API keys, private file paths, or other secrets in screenshots.
--->
-
 ## Installation
 
 **Requirement:** Python 3.10 or newer. The `td` command is installed together with `termdoctor`.
@@ -62,8 +52,6 @@ git clone https://github.com/xydojhuk/termdoctor.git
 cd termdoctor
 pipx install .
 ```
-
-> **Releases:** the badge above shows the latest published GitHub Release. Installation from the default branch uses its current source, which may differ from the most recent tagged release.
 
 ## Usage
 
