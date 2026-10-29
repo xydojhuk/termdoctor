@@ -1,0 +1,28 @@
+syntax_error: Python cannot understand how this piece of code is written.
+indentation_error: Some lines are aligned in a way Python does not understand.
+module_not_found: Python is looking for `{module}`, but it cannot find it here.
+import_error_circular: Two Python files depend on each other before they finish loading.
+import_error: Python found the file, but not the thing you tried to import from it.
+name_error: Python encountered `{name}` but does not know what it refers to.
+type_error_missing_argument: A function expected another piece of information when it was called.
+type_error_unexpected_keyword: A function received an argument name it does not recognize.
+type_error_not_callable: The program tried to use a value as if it were a function.
+type_error_not_subscriptable: The program tried to access this value with square brackets, but it cannot.
+type_error_not_iterable: The program tried to loop over something that cannot be looped over.
+type_error_unsupported_operand: These two values cannot be used together with this operator.
+type_error_multiple_values: A function received the same argument more than once.
+type_error: Python cannot perform this action with the value it received.
+value_error_invalid_literal: Python cannot read this text as a number.
+value_error: The value has the right kind, but it is not allowed here.
+attribute_error_none: The program expected an object, but received `None` instead.
+attribute_error: The object does not have the requested property or method.
+key_error: The program asked a dictionary for a key it does not contain.
+index_error: The program asked for an element beyond the collection's limits.
+file_not_found: Python tried to open a path that does not exist where it is looking.
+permission_error: The operating system did not allow this action on the resource.
+zero_division_error: The program tried to divide a number by zero.
+recursion_error: A function called itself too many times without stopping.
+unicode_decode_error: Python cannot read these bytes as text in the chosen encoding.
+json_decode_error: The text does not follow the rules of JSON.
+unbound_local_error: A local variable is read before it gets a value.
+assertion_error: An assumption checked by the program turned out to be false.

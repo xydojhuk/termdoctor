@@ -152,8 +152,8 @@ def test_cli_global_russian_language(tmp_path):
     result = runner.invoke(app, ["--lang", "rus", "explain", str(traceback_file)])
 
     assert result.exit_code == 0
-    assert "Обнаружена ошибка Python" in result.output
-    assert "Имя используется до объявления" in result.output
+    assert "TermDoctor v0.4.1 · NameError" in result.output
+    assert "Python встретил имя" in result.output
 
 
 def test_run_no_history_option_is_accepted():

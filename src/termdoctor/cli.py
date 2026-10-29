@@ -17,14 +17,17 @@ from termdoctor.core.history import (
 from termdoctor.core.runner import run_shell_command
 from termdoctor.core.shortcuts import expand_script_shortcut
 from termdoctor.diagnostic_json import diagnosis_to_json
+from termdoctor.education import get_active_mode
 from termdoctor.engines.registry import get_default_registry, get_engine_by_language, get_language_detector
 from termdoctor.engines.python.environment import diagnose_python_project, get_python_environment
 from termdoctor.i18n import (
     SUPPORTED_LOCALES,
     get_locale,
     history_enabled,
-    save_history_enabled,
+    resolve_mode,
     resolve_locale,
+    save_history_enabled,
+    set_saved_mode,
     set_locale,
     set_saved_locale,
     tr,
@@ -68,8 +71,9 @@ def callback(
     lang: str | None = typer.Option(
         None,
         "--lang",
-        help="Interface language: en or ru. Aliases such as eng and rus are accepted.",
+        help="Interface language: en, ru, or uk.",
     ),
+    mode: str | None = typer.Option(None, "--mode", help="Explanation mode: beginner or standard."),
     version: bool = typer.Option(
         False,
         "--version",
@@ -80,6 +84,9 @@ def callback(
 ) -> None:
     try:
         set_locale(lang)
+        ctx_mode = resolve_mode(mode)
+        from termdoctor.education import set_active_mode
+        set_active_mode(ctx_mode)
     except ValueError as exc:
         console.print(f"[red]{exc}[/red]")
         raise typer.Exit(code=2)
@@ -183,6 +190,7 @@ def render_engine_diagnosis(diagnosis) -> None:
         diagnosis.command_result,
         sections=diagnosis.sections,
         language_name=diagnosis.display_name,
+        mode=get_active_mode(),
     )
 
 
@@ -290,7 +298,7 @@ def clear_saved_history() -> None:
 
 @config_app.command("language")
 def config_language(
-    value: str | None = typer.Argument(None, help="Language to save as default: en or ru."),
+    value: str | None = typer.Argument(None, help="Language to save as default: en, ru, or uk."),
 ) -> None:
     if value is None:
         locale = resolve_locale()
@@ -309,14 +317,26 @@ def config_language(
 def show_config(ctx: typer.Context) -> None:
     if ctx.invoked_subcommand is not None:
         return
-    console.print(f"Language: {resolve_locale()}")
-    console.print(f"History: {'on' if history_enabled() else 'off'}")
-    console.print("Explanation mode: standard (educational modes planned for v0.4.1)")
+    console.print(f"{tr('settings.language')}: {resolve_locale()}")
+    console.print(f"{tr('settings.history')}: {'on' if history_enabled() else 'off'}")
+    console.print(f"{tr('settings.mode')}: {resolve_mode()}")
 
 
 @set_app.command("lang")
 def set_language(value: str) -> None:
     config_language(value)
+
+
+@set_app.command("mode")
+def set_explanation_mode(value: str) -> None:
+    try:
+        mode = set_saved_mode(value)
+        from termdoctor.education import set_active_mode
+        set_active_mode(mode)
+    except ValueError as exc:
+        console.print(f"[red]{exc}[/red]")
+        raise typer.Exit(code=2)
+    console.print(f"{tr('settings.mode')}: {mode}")
 
 
 @set_app.command("history")
@@ -325,7 +345,7 @@ def set_history(value: str) -> None:
         console.print("[red]Use on or off.[/red]")
         raise typer.Exit(code=2)
     save_history_enabled(value.lower() == "on")
-    console.print(f"History: {value.lower()}")
+    console.print(f"{tr('settings.history')}: {value.lower()}")
 
 
 def load_explain_source(source: str) -> tuple[str, Path | None]:

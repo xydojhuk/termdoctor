@@ -1,6 +1,24 @@
 # Changelog
 
-All notable changes to TermDoctor are tracked here. Entries under **Unreleased** describe work that is not yet part of a published release.
+## 0.4.1 - Explanation Modes and Ukrainian Localization
+
+### Added
+
+- Beginner and Standard explanation modes with persistent settings and per-command `--mode` selection.
+- Guided questions for all 105 Python diagnostic rules in English, Russian, and Ukrainian.
+- Technical mechanism descriptions for all 105 Python rules in all three languages.
+- Ukrainian interface translations and Ukrainian explanations for all 105 Python rules.
+- Mode-specific structured JSON diagnostic content.
+
+### Changed
+
+- Beginner displays a short explanation, error location, and a question without direct fixes.
+- Standard displays the exception mechanism where available, possible causes, and concrete recommendations.
+- CLI configuration shows the selected explanation mode.
+
+### Fixed
+
+- Direct script execution now recognizes `--mode` and `--mode=...` options.
 
 ## 0.4.0 - CLI foundation (2026-10-28)
 
@@ -11,7 +29,7 @@ All notable changes to TermDoctor are tracked here. Entries under **Unreleased**
 - Streaming stdout/stderr with inherited stdin for interactive scripts.
 - Optional execution timeout and handling of Ctrl+C.
 - Interpreter-aware Python environment probe.
-- Structured JSON diagnosis for future integrations (`--format json`).
+- Structured JSON diagnosis (`--format json`).
 - Multi-platform GitHub Actions test matrix and regression tests.
 
 ### Changed

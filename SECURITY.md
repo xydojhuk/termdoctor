@@ -20,6 +20,6 @@ No fixed response time, bounty, or remediation SLA is promised.
 ## Sensitive data and command execution
 
 - TermDoctor runs the command you ask it to run. Do not execute untrusted scripts expecting TermDoctor to isolate them.
-- Failure history is disabled by default in the 0.4.0 development version. It can be enabled with `td set history on` and disabled with `td set history off`.
+- Failure history is disabled by default. It can be enabled with `td set history on` and disabled with `td set history off`.
 - If history is enabled, common secrets are redacted on a best-effort basis; unfamiliar secret formats may remain in output.
 - Avoid including credentials or private information in bug reports, screenshots, generated Markdown reports, or diagnostic logs.

@@ -15,14 +15,14 @@
   <a href="https://github.com/xydojhuk/termdoctor/actions/workflows/tests.yml"><img alt="Tests" src="https://github.com/xydojhuk/termdoctor/actions/workflows/tests.yml/badge.svg"></a>
 </p>
 
-
 ## Features
 
 - **Short commands:** `td main.py` or `termdoctor main.py` instead of wrapping every Python call manually.
 - **Python traceback diagnosis:** identify exceptions, show source context when available, and suggest possible causes and fixes.
 - **Python project context:** inspect interpreters, virtual environments, dependency files, and project structure.
 - **Framework-aware rules:** Django, FastAPI, Flask, Pydantic, SQLAlchemy, Alembic, pytest, aiogram, and pyTelegramBotAPI.
-- **Two interface languages:** English (`en`) and Russian (`ru`).
+- **Three interface languages:** English (`en`), Russian (`ru`), and Ukrainian (`uk`).
+- **Two explanation modes:** Beginner provides guided questions without direct fixes; Standard describes Python behavior, possible causes, and concrete checks.
 - **Local operation:** no account, cloud API, or network connection needed for diagnostics.
 - **Privacy-conscious defaults:** failure history is **off** unless you turn it on.
 
@@ -30,12 +30,12 @@ TermDoctor currently diagnoses **Python** errors. It is a diagnostic helper, not
 
 ## Installation
 
-**Requirement:** Python 3.10 or newer. The `td` command is installed together with `termdoctor`.
+**Requirement:** Python 3.10 or newer. Both `td` and `termdoctor` are installed.
 
 Recommended installation with [pipx](https://pipx.pypa.io/):
 
 ```bash
-pipx install git+https://github.com/xydojhuk/termdoctor.git
+pipx install git+https://github.com/xydojhuk/termdoctor.git@v0.4.1
 ```
 
 Check the installed command:
@@ -65,16 +65,25 @@ td "my script.py" "argument with spaces"
 
 TermDoctor runs the script using an active virtual environment when available, otherwise a detected project virtual environment or a Python interpreter from `PATH`. It shows normal program output and, if Python fails, prints a diagnosis. Interactive scripts using `input()` are supported.
 
-### Choose an explanation language
+### Language and explanation mode
 
 ```bash
-td set lang ru       # Save Russian
-td set lang en       # Save English
-td config            # Show current settings
-td --lang ru main.py # Use Russian for this run only
+td set lang ru
+td set lang uk
+td set lang en
+td set mode beginner
+td set mode standard
+td config
 ```
 
-`td change lang ru` is also accepted as an alias for `td set lang ru`.
+To change settings for one command only:
+
+```bash
+td --lang uk --mode beginner main.py
+td --lang en --mode standard main.py
+```
+
+**Beginner** explains the error in plain language, points to its location, and asks a diagnostic question. **Standard** provides technical explanations, relevant causes, and specific checks. Standard remains the default for existing installations. `td change` is an alias for `td set`.
 
 ### Inspect an error or environment
 
@@ -105,7 +114,7 @@ td history
 td clear
 ```
 
-JSON output is intended for integrations, not regular terminal reading. The JSON run mode captures output and does not provide the same interactive behavior as the default text mode.
+`--format json` returns structured diagnostic data, including the selected explanation mode. JSON run mode captures output and is not interactive.
 
 To save failed runs explicitly:
 

@@ -36,17 +36,17 @@ def choose_python(script: str, *, cwd: Path | None = None) -> str:
 
 
 def expand_script_shortcut(argv: list[str]) -> list[str]:
-    """Transform `td [--lang ru] script.py [args]` into an explicit run.
+    """Transform `td [--lang ru] [--mode beginner] script.py [args]` into an explicit run.
 
     Do not reinterpret built-in subcommands or other arbitrary shell commands.
     """
     index = 0
     while index < len(argv):
         arg = argv[index]
-        if arg == "--lang":
+        if arg in {"--lang", "--mode"}:
             index += 2
             continue
-        if arg.startswith("--lang="):
+        if arg.startswith(("--lang=", "--mode=")):
             index += 1
             continue
         if arg.startswith("-"):

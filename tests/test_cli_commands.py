@@ -89,5 +89,5 @@ def test_explain_with_lang_python(tmp_path):
     result = runner.invoke(app, ["explain", str(traceback_file), "--lang", "python"])
 
     assert result.exit_code == 0
-    assert "Python error detected" in result.output
+    assert "TermDoctor v0.4.1 · NameError" in result.output
     assert "NameError" in result.output

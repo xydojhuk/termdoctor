@@ -63,7 +63,7 @@ where = ["src"]
 version = { attr = "termdoctor.__version__" }
 
 [tool.setuptools.package-data]
-termdoctor = ["engines/python/*.yml", "locales/*.yml"]
+termdoctor = ["engines/python/*.yml", "locales/*.yml", "education/*.yml"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]

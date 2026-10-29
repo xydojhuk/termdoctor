@@ -1,0 +1,105 @@
+syntax_error: Which symbol or delimiter is different near this line?
+indentation_error: Which lines are supposed to belong to the same code block?
+module_not_found: Which Python environment contains the package you are trying to import?
+import_error_circular: Which files import each other before their definitions are ready?
+import_error: Does the imported name actually exist in the module you selected?
+name_error: Where is `{name}` first defined, and can this line access it?
+type_error_missing_argument: Which value does the function definition require but the call does not supply?
+type_error_unexpected_keyword: Which named parameters are accepted by the actual function signature?
+type_error_not_callable: What type does the value have at the moment it is called?
+type_error_not_subscriptable: Is the object a collection that supports index or key access?
+type_error_not_iterable: What value is the loop trying to iterate over?
+type_error_unsupported_operand: What are the types of the two values used by this operator?
+type_error_multiple_values: Where might the same argument be supplied twice?
+type_error: Which operation received a value of a different type than it expects?
+value_error_invalid_literal: What characters appear in the string being converted to a number?
+value_error: What rule does the function impose on the value, even when its type is correct?
+attribute_error_none: Where could the expected object have become `None`?
+attribute_error: What attributes are actually present on the object at this line?
+key_error: Which keys are really stored in the dictionary or mapping?
+index_error: How many items exist, and which index does the code request?
+file_not_found: What exact path is being opened, and relative to which directory?
+permission_error: Which user runs the process, and what access does the target require?
+zero_division_error: Which calculation produces the value used as the divisor?
+recursion_error: What condition is supposed to stop the function from calling itself?
+unicode_decode_error: Which encoding was used to produce the original bytes?
+json_decode_error: Is the input valid JSON, including quotes and commas?
+unbound_local_error: Does every execution path assign this local variable before reading it?
+assertion_error: What assumption was the assertion trying to verify?
+runtime_error: What operation was in progress when the runtime rejected it?
+os_error: Which OS resource or path was the program trying to use?
+is_a_directory_error: Was the path expected to point to a regular file?
+not_a_directory_error: Which component of the requested path is a file rather than a directory?
+eof_error: Where does the program expect input after the input stream has ended?
+connection_error: Which endpoint and network path does the connection use?
+timeout_error: Which operation exceeded its deadline, and what might it be waiting for?
+broken_pipe_error: Did the receiving process or connection close before the write finished?
+memory_error: What data structure grows immediately before the memory failure?
+tab_error: Do the indentation characters match across the entire block?
+lookup_error: What key or index was requested from which collection?
+arithmetic_error: Which mathematical operation and values caused the failure?
+overflow_error: Which calculation produced an out-of-range number?
+floating_point_error: Which floating-point calculation triggered the configured numeric trap?
+reference_error: Could the referenced object have been deleted already?
+environment_error: Which system resource or environment value was required?
+io_error: Which read or write operation failed, and on what resource?
+filesystem_exists_error: Does the destination already exist, and was replacing it expected?
+process_lookup_error: Does the process identifier still refer to a running process?
+child_process_error: Which child process state does the parent expect?
+interrupted_error: Can the interrupted system operation be retried safely?
+blocking_io_error: Is the resource ready for a non-blocking read or write?
+not_implemented_error: Which branch deliberately reports that it is not implemented?
+system_error: Which extension or interpreter operation failed internally?
+system_exit: What exit status was requested and by which code path?
+keyboard_interrupt: Which operation was running when the interrupt was received?
+generator_exit: Which generator was being closed, and did it release its resources?
+stop_iteration: Which iterator reached the end of its data?
+stop_async_iteration: Which asynchronous iterator reached the end?
+exception_group: Which individual failures are contained in the exception group?
+base_exception_group: Which base exceptions were grouped and where were they raised?
+async_cancelled_error: Who cancelled the task, and which operation awaited it?
+async_timeout_error: Which awaited operation did not complete in time?
+subprocess_called_process_error: What error did the child process print before exiting?
+subprocess_timeout_expired: What is the child process still waiting for?
+config_parser_error: Which section or option of the configuration file is malformed?
+argparse_argument_error: Which argument definition conflicts with the command parser?
+argparse_exit: Which input made the argument parser stop the program?
+dataclass_frozen_instance_error: Was the object declared immutable before the assignment?
+pydantic_validation_error: Which input field did not satisfy the declared schema?
+pydantic_user_error: Which Pydantic configuration option is inconsistent with the model?
+django_template_does_not_exist: Where does Django search for this template?
+django_object_does_not_exist: Which query condition returned no database object?
+django_model_does_not_exist: Does the requested database record satisfy all query filters?
+django_multiple_objects_returned: Which query filter matches more rows than expected?
+django_integrity_error: Which database constraint did this Django write violate?
+sqlalchemy_integrity_error: Which uniqueness or foreign-key rule did the SQL statement violate?
+sqlalchemy_programming_error: Does the SQL statement match the actual database schema?
+sqlalchemy_no_result_found: Which filter resulted in zero rows?
+sqlalchemy_multiple_results_found: Why did a single-result query return several rows?
+requests_connection_error: Can the target server be reached from this environment?
+requests_timeout: Which stage of the HTTP request exceeded its time limit?
+requests_http_error: Which HTTP status did the server return and why?
+urllib_url_error: Which URL, host or network setting caused the connection problem?
+urllib_http_error: What does the returned HTTP status mean for this request?
+numpy_axis_error: How many dimensions does the array have, and which axis was requested?
+pandas_key_error: Which labels exist in this DataFrame or Series?
+pandas_parser_error: Which row or separator causes the input data to be parsed incorrectly?
+pytest_failed_assertion: Which expected and actual values differ in this test?
+pytest_skipped: Which skip condition caused pytest to skip this test?
+click_exception: Which command parameter or operation caused Click to abort?
+typer_bad_parameter: Which supplied argument fails the type or validation rules?
+flask_bad_request: Which incoming HTTP request field does the handler expect?
+jwt_decode_error: Is the token shaped and encoded as the decoder expects?
+jwt_expired_signature: Which expiration timestamp is embedded in the token?
+yaml_error: Which YAML indentation, colon or scalar is malformed?
+toml_decode_error: Which TOML key, quote or table header is malformed?
+importlib_metadata_package_not_found: Is package metadata installed in the interpreter being used?
+django_improperly_configured: Which Django setting is missing or inconsistent?
+django_no_reverse_match: Which named URL pattern and arguments is Django trying to reverse?
+fastapi_response_validation_error: Which returned response field differs from the response model?
+sqlalchemy_operational_error: Can the configured database service be reached and queried?
+django_command_error: Which Django management command and argument failed?
+alembic_command_error: Which revision or migration setting does Alembic reject?
+pytest_fixture_lookup_error: Where should pytest find the requested fixture definition?
+aiogram_telegram_bad_request: Which Telegram API request parameter was rejected?
+pytelegrambotapi_api_exception: Which Telegram API method and response caused the failure?
