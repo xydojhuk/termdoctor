@@ -48,7 +48,7 @@ diagnosis:
   unknown_rule_title: "No rule found"
   unknown_rule: "TermDoctor detected a Python error, but there is no detailed rule for it yet.\n\nYou can add a new rule in:\nsrc/termdoctor/engines/python/rules.yml"
   no_error_title: "No Python error detected"
-  no_error: "TermDoctor could not detect a Python traceback or a known Python error line.\n\nTermDoctor 0.3.1 currently provides a stable Python engine."
+  no_error: "TermDoctor could not detect a Python traceback or a known Python error line.\n\nTermDoctor supports Python errors."
   input_preview: "Input preview"
 framework:
   title: "Framework context"
@@ -215,3 +215,17 @@ config:
 errors:
   unsupported_language: "Unsupported language '{language}'. Supported languages: {supported}."
   unsupported_engine: "Unknown language engine: {engine}."
+
+education:
+  beginner_what: "WHAT HAPPENED?"
+  beginner_where: "WHERE TO LOOK?"
+  beginner_hint: "THINK ABOUT THIS"
+  standard_what: "WHAT HAPPENED?"
+  standard_mechanism: "HOW IT WORKS"
+  location_hint: "Check the code at {location}, including the lines immediately before it."
+  location_unknown: "Find the last frame in your own code in the traceback."
+
+settings:
+  language: "Language"
+  history: "History"
+  mode: "Explanation mode"

@@ -10,7 +10,7 @@ from typing import Any
 import yaml
 
 
-SUPPORTED_LOCALES = {"en": "English", "ru": "Русский"}
+SUPPORTED_LOCALES = {"en": "English", "ru": "Русский", "uk": "Українська"}
 LOCALE_ALIASES = {
     "en": "en",
     "eng": "en",
@@ -20,6 +20,12 @@ LOCALE_ALIASES = {
     "russian": "ru",
     "рус": "ru",
     "русский": "ru",
+    "uk": "uk",
+    "ua": "uk",
+    "ukr": "uk",
+    "ukrainian": "uk",
+    "українська": "uk",
+    "український": "uk",
 }
 CONFIG_DIR = Path.home() / ".termdoctor"
 CONFIG_FILE = CONFIG_DIR / "config.json"
@@ -150,3 +156,35 @@ def save_history_enabled(value: bool) -> None:
     config = load_config()
     config["history_enabled"] = value
     save_config(config)
+
+
+MODES = ("beginner", "standard")
+MODE_ALIASES = {"beginner": "beginner", "beg": "beginner", "standard": "standard", "std": "standard", "standart": "standard"}
+
+
+def normalize_mode(value: str) -> str:
+    mode = MODE_ALIASES.get(value.strip().lower())
+    if mode is None:
+        raise ValueError(f"Unsupported mode '{value}'. Choose beginner or standard.")
+    return mode
+
+
+def resolve_mode(explicit: str | None = None) -> str:
+    if explicit is not None:
+        return normalize_mode(explicit)
+    env = os.environ.get("TERMDOCTOR_MODE")
+    if env:
+        return normalize_mode(env)
+    stored = load_config().get("explanation_mode", "standard")
+    try:
+        return normalize_mode(stored) if isinstance(stored, str) else "standard"
+    except ValueError:
+        return "standard"
+
+
+def set_saved_mode(value: str) -> str:
+    mode = normalize_mode(value)
+    data = load_config()
+    data["explanation_mode"] = mode
+    save_config(data)
+    return mode

@@ -7,6 +7,7 @@ from rich.table import Table
 from termdoctor import __version__
 from termdoctor.core.history import format_history_time, trim_text
 from termdoctor.i18n import tr
+from termdoctor.education import educational_content
 from termdoctor.models import (
     CommandResult,
     DiagnosticSection,
@@ -52,64 +53,73 @@ def render_diagnosis(
     command_result: CommandResult | None = None,
     sections: list[DiagnosticSection] | None = None,
     language_name: str = "Python",
+    mode: str = "standard",
 ) -> None:
     console.print()
     console.print(
         Panel(
-            build_error_summary(parsed_error, command_result),
-            title=(f"[bold red]TermDoctor v{__version__} · {parsed_error.error_type}[/bold red]"
-                   f"  [dim]{tr('diagnosis.detected_title', language=language_name, error_type=parsed_error.error_type)}[/dim]"),
+            build_error_summary(parsed_error, command_result) if mode == "standard"
+            else build_learner_summary(parsed_error),
+            title=f"[bold red]TermDoctor v{__version__} · {parsed_error.error_type}[/bold red]",
             border_style="red",
         )
     )
-
-    if parsed_error.source_context:
-        console.print()
-        console.print(
-            Panel(
-                "\n".join(parsed_error.source_context),
-                title=tr("diagnosis.source_context"),
-                border_style="blue",
-            )
-        )
-
-    for section in sections or []:
-        render_diagnostic_section(section)
-
     if rule is None:
         render_unknown_rule(parsed_error)
         return
 
+    content = educational_content(rule, parsed_error, mode=mode)
+    if mode == "beginner":
+        for key, value in (
+            ("education.beginner_what", content["overview"]),
+            ("education.beginner_where", content["where"]),
+            ("education.beginner_hint", content["question"]),
+        ):
+            console.print()
+            console.print(Panel(value, title=tr(key), border_style="cyan"))
+        return
+
+    if parsed_error.source_context:
+        console.print()
+        console.print(Panel("\n".join(parsed_error.source_context), title=tr("diagnosis.source_context"), border_style="blue"))
+
+    for section in sections or []:
+        render_diagnostic_section(section)
+
     console.print()
-    console.print(
-        Panel(
-            apply_context(rule.explanation, parsed_error),
-            title=f"[bold yellow]{tr('diagnosis.what_happened', title=rule.title)}[/bold yellow]",
-            border_style="yellow",
-        )
-    )
+    console.print(Panel(content["overview"], title=tr("education.standard_what"), border_style="yellow"))
+    if content["mechanism"]:
+        console.print()
+        console.print(Panel(content["mechanism"], title=tr("education.standard_mechanism"), border_style="blue"))
 
-    if rule.causes:
-        table = Table(title=tr("diagnosis.likely_causes"), show_header=True, header_style="bold cyan")
-        table.add_column(tr("diagnosis.item"), style="cyan", width=4, justify="right")
+    if content["causes"]:
+        table = Table(title=tr("diagnosis.likely_causes"), show_header=False)
+        table.add_column("#", width=3, style="cyan")
         table.add_column(tr("diagnosis.cause"))
-        for index, cause in enumerate(rule.causes, 1):
-            table.add_row(str(index), apply_context(cause, parsed_error))
+        for index, cause in enumerate(content["causes"], 1):
+            table.add_row(str(index), cause)
         console.print()
         console.print(table)
 
-    if rule.fixes:
-        table = Table(title=tr("diagnosis.what_to_try"), show_header=True, header_style="bold green")
-        table.add_column(tr("diagnosis.item"), style="cyan", width=4, justify="right")
+    if content["actions"]:
+        table = Table(title=tr("diagnosis.what_to_try"), show_header=False)
+        table.add_column("#", width=3, style="cyan")
         table.add_column(tr("diagnosis.suggestion"))
-        for index, fix in enumerate(rule.fixes, 1):
-            table.add_row(str(index), apply_context(fix, parsed_error))
+        for index, action in enumerate(content["actions"], 1):
+            table.add_row(str(index), action)
         console.print()
         console.print(table)
 
-    if rule.examples:
-        console.print()
-        console.print(Panel("\n".join(rule.examples), title=tr("diagnosis.examples"), border_style="green"))
+
+def build_learner_summary(parsed_error: ParsedError) -> str:
+    message = parsed_error.message
+    summary = f"{tr('diagnosis.message')}: {message}" if message else parsed_error.error_type
+    if parsed_error.file_path:
+        path = parsed_error.file_path
+        if parsed_error.line_number is not None:
+            path += f":{parsed_error.line_number}"
+        summary += f"\n{tr('diagnosis.location')}: {path}"
+    return summary
 
 
 def render_diagnostic_section(section: DiagnosticSection) -> None:

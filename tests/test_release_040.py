@@ -52,7 +52,7 @@ def test_shortcut_reports_error_and_preserves_exit_code(tmp_path):
     proc = subprocess.run([sys.executable, "-m", "termdoctor", str(script)],
                           capture_output=True, text=True, env=sandbox_env(tmp_path), timeout=12)
     assert proc.returncode == 1
-    assert "TermDoctor v0.4.0" in proc.stdout
+    assert "TermDoctor v0.4.1" in proc.stdout
     assert "NameError" in proc.stdout
     assert not (tmp_path / ".termdoctor" / "history.json").exists()
 

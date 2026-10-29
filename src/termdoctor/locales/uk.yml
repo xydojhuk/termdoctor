@@ -1,0 +1,235 @@
+app:
+  help: Пояснює помилки Python у терміналі та допомагає визначити причину.
+  doctor_help: Перевіряє стан Python-проєкту.
+common:
+  'yes': так
+  'no': ні
+  found: знайдено
+  not_found: не знайдено
+  active: активно
+  not_active: неактивно
+  unknown: невідомо
+  none: '-'
+  error: Помилка
+  info: ІНФО
+  warn: УВАГА
+  ok: ГАРАЗД
+version: TermDoctor {version}
+languages:
+  title: Підтримувані мови інтерфейсу
+  engines_title: Підтримувані рушії мов програмування
+run:
+  missing_command: Укажіть команду для запуску.
+  example_1: 'Приклад: td main.py'
+  example_2: 'Приклад: td run -- python main.py'
+  success_title: TermDoctor
+  success: Команду успішно виконано
+  duration: 'Тривалість: {seconds:.2f} с'
+  no_history_saved: Історію не збережено, оскільки використано --no-history.
+diagnosis:
+  detected_title: 'Виявлено помилку {language}: {error_type}'
+  what_happened: Що сталося — {title}
+  likely_causes: Можливі причини
+  what_to_try: Що перевірити
+  examples: Приклади
+  item: №
+  cause: Причина
+  suggestion: Рекомендація
+  command: Команда
+  exit_code: Код завершення
+  working_directory: Робоча тека
+  error: Помилка
+  full_error_type: Повний тип помилки
+  message: Повідомлення
+  location: Місце помилки
+  exception_chain: Ланцюжок винятків
+  source_context: Фрагмент вихідного коду
+  traceback_frames: Кадри traceback
+  unknown_rule_title: Детальне правило не знайдено
+  unknown_rule: TermDoctor розпізнав помилку Python, проте детальне правило для неї відсутнє.
+  no_error_title: Помилку Python не виявлено
+  no_error: TermDoctor не зміг розпізнати traceback Python або відомий рядок помилки.
+  input_preview: Попередній перегляд вхідних даних
+framework:
+  title: Контекст фреймворку
+  matched: Фреймворк із traceback
+  detected: Виявлено в проєкті
+  evidence: Підстави
+module:
+  title: Контекст середовища
+  missing_import: Відсутній імпорт
+  top_level_import: Імпорт верхнього рівня
+  suggested_package: Імовірний пакет
+  package_hint: Підказка щодо пакета
+  package_hint_value: Імпорт `{module}` зазвичай надає пакет `{package}`
+  current_directory: Поточна тека
+  project_root: Корінь проєкту
+  python_executable: Інтерпретатор Python
+  virtual_environment: Віртуальне середовище
+  active_venv_path: Шлях активного venv
+  project_venv: Знайдений venv проєкту
+  activation_command: Команда активації
+  requirements: requirements.txt
+  pyproject: pyproject.toml
+  in_requirements: Пакет зазначено у файлах requirements
+  in_pyproject: Пакет зазначено в pyproject.toml/Pipfile
+  stdlib: Модуль стандартної бібліотеки
+  local_module: Шлях до локального модуля
+  suggestions_title: Рекомендації з урахуванням середовища
+  install_hint: 'Установіть пакет командою: {python} -m pip install {package}'
+  activate: 'Активуйте віртуальне середовище проєкту: {command}'
+  activate_generic: Активуйте віртуальне середовище проєкту та повторіть запуск.
+  install_requirements: Пакет зазначено у файлі requirements. Установіть залежності проєкту з цього файлу.
+  install_pyproject: 'Пакет зазначено в метаданих проєкту. Установіть залежності, наприклад: {python} -m pip install
+    -e .'
+  third_party: 'Якщо це сторонній пакет, установіть його командою: {python} -m pip install {package}'
+  local_found: Локальний модуль із такою назвою знайдено за шляхом {path}. Перевірте робочу теку й шлях імпорту
+    замість установлення пакета з PyPI.
+  stdlib_missing: Це ім’я належить стандартній бібліотеці Python. Перевірте версію інтерпретатора, конфлікти назв
+    файлів і запис імпорту; установлювати модуль через pip не потрібно.
+section:
+  suggestions: Рекомендації
+environment:
+  intro_title: Середовище Python
+  intro: Середовище Python і файли проєкту, виявлені TermDoctor.
+  item: Параметр
+  value: Значення
+  python_version: Версія Python
+  python_executable: Інтерпретатор Python
+  current_directory: Поточна тека
+  project_root: Корінь проєкту
+  virtual_environment: Віртуальне середовище
+  active_venv_path: Шлях активного venv
+  project_venv: Знайдений venv проєкту
+  activation_command: Команда активації
+  requirements: Файли requirements
+  pyproject: pyproject.toml
+  env: .env
+  env_example: .env.example
+  tests: Тека tests
+  dependencies_title: Виявлені залежності
+  dependencies_empty: У підтримуваних файлах залежностей не знайдено.
+  source: Джерело
+  packages: Пакети
+  frameworks_title: Виявлені фреймворки
+  frameworks_empty: Підтримуваних Python-фреймворків у проєкті не виявлено.
+  framework: Фреймворк
+  evidence: Підстави
+doctor:
+  title: 'TermDoctor: перевірка Python'
+  intro: Перевірка Python-проєкту на основі його знайденого кореня.
+  checks: Перевірки
+  status: Стан
+  check: Перевірка
+  warnings: Попередження
+  warning: Попередження
+  suggestions: Рекомендації
+  python_available: Python доступний
+  venv_active: Віртуальне середовище активне
+  project_venv_exists: У проєкті знайдено віртуальне середовище
+  dependency_file_found: Знайдено файл залежностей
+  tests_found: Знайдено теку tests
+  frameworks_detected: 'Виявлені фреймворки: {frameworks}'
+  no_frameworks: Підтримуваних фреймворків не знайдено — це не помилка.
+  warning_venv: Віртуальне середовище неактивне.
+  create_venv: Створіть і активуйте віртуальне середовище проєкту.
+  activate_venv: 'Активуйте віртуальне середовище проєкту: {command}'
+  activate_venv_generic: Активуйте віртуальне середовище перед запуском команд проєкту.
+  warning_dependencies: Підтримуваного файлу залежностей не знайдено.
+  add_dependencies: Додайте requirements.txt або pyproject.toml, щоб середовище проєкту можна було відтворити.
+  install_requirements: Установіть залежності з виявлених файлів requirements.
+  install_pyproject: 'Якщо проєкт можна встановити як пакет, виконайте: {python} -m pip install -e .'
+  warning_env_example: Файл .env існує, але .env.example відсутній.
+  add_env_example: Додайте .env.example із безпечними прикладами значень.
+  warning_tests: Теку tests не знайдено.
+  add_tests: Додайте tests/, якщо проєкт підтримуватиметься або публікуватиметься.
+  django_manage_missing: Знайдено залежність Django, але файл manage.py відсутній.
+  django: Для помилок Django перевірте settings.py, INSTALLED_APPS, підключення до БД, шаблони та назви URL.
+  fastapi: Для помилок FastAPI перевірте моделі запитів і відповідей, валідацію Pydantic і шлях імпорту Uvicorn.
+  flask: Для помилок Flask перевірте фабрику застосунку, шлях імпорту, маршрути, шаблони та змінні середовища.
+  pydantic: Для помилок Pydantic перевірте типи полів моделі, валідатори, alias і конфігурацію.
+  sqlalchemy: Для помилок SQLAlchemy перевірте URL бази даних, сесії, моделі, зв’язки та виконані міграції.
+  alembic: Для помилок Alembic перевірте alembic.ini, env.py, ідентифікатори ревізій і стан міграцій.
+  pytest: Для помилок pytest перевірте пошук тестів, назви фікстур, conftest.py та результати assert.
+  aiogram: Для помилок aiogram перевірте токен бота, підключення маршрутизаторів, async-обробники та відповідь Telegram
+    API.
+  telebot: Для помилок pyTelegramBotAPI перевірте токен, фільтри обробників, polling/webhook та відповідь Telegram
+    API.
+history:
+  empty: 'Збережених помилок немає. Спершу виконайте команду: td main.py'
+  title: Історія TermDoctor
+  time: Час
+  error: Помилка
+  exit: Код
+  message: Повідомлення
+  command: Команда
+  cleared: Історію очищено.
+  no_history: Історія порожня.
+  run_first: 'Спершу запустіть команду, наприклад: td main.py'
+paste:
+  title: Вставте traceback нижче.
+  finish: Для завершення натисніть Ctrl+D у Linux/macOS або Ctrl+Z, потім Enter у Windows.
+report:
+  written: 'Звіт збережено: {path}'
+  no_saved: Збережених помилок не знайдено. Спершу запустіть команду, що завершиться помилкою.
+  no_engine: Жоден підтримуваний рушій не розпізнав цей traceback.
+  no_error: У переданих даних не вдалося виявити підтримувану помилку.
+  title: Звіт TermDoctor
+  summary: Коротка інформація
+  language: Мова програмування
+  error: Помилка
+  message: Повідомлення
+  location: Місце помилки
+  command: Команда
+  exit_code: Код завершення
+  working_directory: Робоча тека
+  timestamp: Час
+  framework_context: Контекст фреймворку
+  matched_framework: Фреймворк із traceback
+  detected_project: Виявлено в проєкті
+  evidence: Підстави
+  diagnosis: Діагноз
+  likely_causes: Можливі причини
+  fixes: Рекомендовані виправлення
+  unknown_rule: TermDoctor розпізнав помилку, але детальне правило для неї відсутнє.
+  module_context: Контекст модуля
+  missing_import: Відсутній імпорт
+  suggested_package: Імовірний пакет
+  package_hint: Підказка щодо пакета
+  package_hint_value: Імпорт `{module}` зазвичай надає пакет `{package}`
+  in_requirements: Пакет зазначено у файлах requirements
+  in_pyproject: Пакет зазначено в pyproject.toml/Pipfile
+  activation: Команда активації
+  environment: Середовище
+  python_version: Версія Python
+  python_executable: Інтерпретатор Python
+  current_directory: Поточна тека
+  project_root: Корінь проєкту
+  virtual_environment: Віртуальне середовище
+  active_venv: Шлях активного venv
+  project_venv: Шлях venv проєкту
+  requirements: Файли requirements
+  pyproject: pyproject.toml
+  dependencies: Виявлені залежності
+  exception_chain: Ланцюжок винятків
+  source_context: Фрагмент вихідного коду
+  raw_traceback: Початковий traceback
+config:
+  saved: 'Мову інтерфейсу за замовчуванням збережено: {language}'
+  current: 'Поточна мова інтерфейсу: {language}'
+errors:
+  unsupported_language: 'Мова ''{language}'' не підтримується. Доступні мови: {supported}.'
+  unsupported_engine: 'Невідомий рушій мови програмування: {engine}.'
+education:
+  beginner_what: ЩО СТАЛОСЯ?
+  beginner_where: ДЕ ШУКАТИ?
+  beginner_hint: ПОМІРКУЙ НАД ЦИМ
+  standard_what: ЩО СТАЛОСЯ?
+  standard_mechanism: ЯК ЦЕ ПРАЦЮЄ
+  location_hint: Перевір код у {location} і кілька рядків вище.
+  location_unknown: Знайди останній кадр зі свого проєкту в traceback.
+
+settings:
+  language: "Мова"
+  history: "Історія"
+  mode: "Режим пояснення"

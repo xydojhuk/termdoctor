@@ -1,0 +1,214 @@
+syntax_error: Parsing happens before any line of this module runs. A token or delimiter that does not fit Python
+  grammar prevents the interpreter from constructing a valid syntax tree.
+indentation_error: Indentation is part of Python grammar. An INDENT or DEDENT token must match the expected structure
+  of blocks after compound statements.
+module_not_found: The import system searches sys.meta_path and the locations configured through sys.path. Packages
+  installed under another interpreter or virtual environment are not necessarily visible to this process.
+import_error_circular: Python places a module in sys.modules before executing all its statements. A second import
+  may encounter this partially initialized module before the requested name has been defined.
+import_error: Finding a module and finding a named object inside it are different steps. The module may load successfully
+  even when the requested symbol is absent or not yet initialized.
+name_error: A name is resolved through the namespaces available to the executing code (local, enclosing, global,
+  built-ins). NameError means none of those lookups produced a binding. Assignment that has not executed cannot
+  create one.
+type_error_missing_argument: Python binds positional and keyword values to parameters when a call begins. Required
+  parameters without bound values make this binding fail before the function body executes.
+type_error_unexpected_keyword: Keyword arguments are checked against the callable signature. Unless it accepts arbitrary
+  keywords via **kwargs, an unrecognized name cannot be bound to a parameter.
+type_error_not_callable: Calling x() invokes the object's call protocol. A value must provide a callable implementation;
+  storing data in a variable does not make it a function.
+type_error_not_subscriptable: The expression x[key] invokes subscription support (typically __getitem__). Types
+  without this protocol cannot be indexed even when they contain other data.
+type_error_not_iterable: A for loop requests an iterator through iter(). The object must implement the iteration
+  protocol, rather than merely having a value.
+type_error_unsupported_operand: Python selects numeric or sequence operator implementations from operand types.
+  If neither operand supplies a compatible method, the operator raises TypeError.
+type_error_multiple_values: Call binding assigns each formal parameter at most once. A positional argument and a
+  keyword argument can accidentally target the same parameter.
+type_error: TypeError reports an invalid operation for the kinds of objects involved. It does not necessarily mean
+  the underlying data is malformed; the operation itself may be incompatible with the supplied types.
+value_error_invalid_literal: The conversion function first accepts a string-like input and then parses its grammar.
+  An invalid character or unsupported numeric notation fails this parsing stage.
+value_error: ValueError indicates that the kind of object is acceptable, but its specific content violates a constraint
+  checked by the operation.
+attribute_error_none: None is the singleton value used for the absence of a result. It cannot provide application-specific
+  methods or fields expected from the intended object.
+attribute_error: Attribute access uses the type's attribute lookup rules, including instance attributes, descriptors
+  and class definitions. Missing names result in AttributeError.
+key_error: Mapping subscription looks up a key according to the mapping's equality and hashing rules. A key that
+  was never inserted, or has a different type, cannot be retrieved by ordinary subscription.
+index_error: Sequence positions are zero-based and must fall within valid bounds. Negative positions count backward,
+  but they must still refer to an existing element.
+file_not_found: Relative filesystem paths are interpreted from the process working directory, not necessarily the
+  directory containing the Python source file.
+permission_error: The OS checks the process identity and permissions when opening or changing a resource. Python
+  raises PermissionError when the system denies that operation.
+zero_division_error: The divisor is evaluated before the division operation. When it equals zero, division is undefined
+  for the numeric operation and Python raises ZeroDivisionError.
+recursion_error: Each recursive function call adds a stack frame. Calls without a terminating path eventually exceed
+  Python's recursion limit.
+unicode_decode_error: Decoding maps bytes to Unicode code points using a specified codec. Bytes not valid in that
+  codec cannot be decoded without an explicit error policy.
+json_decode_error: A JSON parser expects a strict data grammar, including double-quoted string keys and properly
+  separated values. Python syntax is not interchangeable with JSON.
+unbound_local_error: An assignment anywhere in a function normally marks that name as local. Reading it on a branch
+  before the assignment executes leads to UnboundLocalError.
+assertion_error: The assert statement tests an expression and raises AssertionError when it is false. Assertions
+  express invariants and are not a substitute for validating untrusted input.
+runtime_error: RuntimeError is raised when an operation cannot continue in its current state and there is no more
+  specific exception class. The message and call stack are necessary to identify the actual invalid state.
+os_error: OSError represents failures reported by operating-system operations. Its errno, filename and strerror
+  fields can help distinguish missing resources, permissions and invalid system requests.
+is_a_directory_error: A filesystem object can exist at a path but still have the wrong kind. File-reading operations
+  generally require a regular file rather than a directory.
+not_a_directory_error: A path is traversed one component at a time. Every component before the final filename must
+  be a directory, otherwise the traversal fails.
+eof_error: input() and other readers raise EOFError when they request more data but the source has reached end-of-file.
+  This often happens with redirected or closed standard input.
+connection_error: Network connection errors occur before an application receives a valid response. The failure may
+  originate in DNS, TCP, TLS, a proxy or the remote endpoint, depending on the traceback.
+timeout_error: A timeout reports an elapsed deadline, not necessarily a broken connection. The operation may still
+  be waiting on a remote response, a lock or a slow local resource.
+broken_pipe_error: Writing to a pipe requires an open reader. When the reader closes its end, the next write fails
+  with a broken-pipe error instead of delivering data.
+memory_error: Python allocates memory for objects dynamically. A request can fail when the allocator or operating
+  system cannot provide a block of the requested size; freeing unused objects may not address an unbounded algorithm.
+tab_error: A visual indentation width is not enough to identify a Python block. Tabs and spaces can look aligned
+  in an editor while tokenizing to inconsistent indentation levels.
+lookup_error: LookupError is the shared base for missing-key and out-of-range index failures. Its specific subclass
+  usually identifies whether the lookup used a mapping key or a sequence index.
+arithmetic_error: ArithmeticError is a base class for numeric-operation failures such as division by zero or overflow.
+  When raised directly, the stack and message are needed to identify the failing calculation.
+overflow_error: Python integers can grow arbitrarily large, but other numeric formats and extension APIs have bounded
+  ranges. Converting or calculating outside those limits can raise OverflowError.
+floating_point_error: FloatingPointError is used by numerical libraries or configured floating-point traps. Ordinary
+  float operations do not always raise it; the numeric runtime settings determine whether an invalid result becomes
+  an exception.
+reference_error: Weak references do not keep an object alive. Once the last strong reference is removed and the
+  target is collected, a proxy can no longer forward attribute access.
+environment_error: EnvironmentError is a historical alias of OSError in modern Python. The underlying errno and
+  operating-system message should be interpreted as system-operation evidence.
+io_error: IOError is an alias of OSError in current Python. A failed read, write, or file operation often retains
+  additional system information in the exception attributes.
+filesystem_exists_error: Exclusive creation flags and filesystem APIs can require a destination not to exist. The
+  OS rejects a new file or directory that would collide with an existing path.
+process_lookup_error: Process identifiers are transient. A PID can become invalid after process exit, so sending
+  a signal or querying a no-longer-existing process fails.
+child_process_error: The parent process may only wait for or inspect child processes it owns and has not already
+  reaped. A mismatch between expected and actual child state triggers a process-management error.
+interrupted_error: A signal may interrupt a blocking system call. Some calls are automatically retried, but operations
+  with partial side effects must be reviewed before explicitly retrying.
+blocking_io_error: Non-blocking I/O returns immediately instead of waiting for readiness. If the buffer is empty
+  or full, the operation signals that the caller must wait or retry later.
+not_implemented_error: Raising NotImplementedError is a deliberate signal in Python source code, often from an abstract
+  interface. It is distinct from returning the NotImplemented singleton during operator dispatch.
+system_error: SystemError usually indicates an internal problem in CPython or an extension rather than an ordinary
+  invalid user input. The native stack and reproducible environment matter more than generic source edits.
+system_exit: SystemExit is a BaseException raised by sys.exit(). If not caught, it ends the interpreter process
+  with the supplied exit status instead of following ordinary application error handling.
+keyboard_interrupt: KeyboardInterrupt normally results from SIGINT while Python is executing. It inherits from BaseException,
+  so broad except Exception handlers do not catch it.
+generator_exit: GeneratorExit is delivered when a generator is closed. The generator should release resources and
+  terminate without yielding new values during finalization.
+stop_iteration: The iterator protocol uses StopIteration to signal exhaustion to its consumer. A for loop handles
+  it internally; an explicit next() call may expose it to the caller.
+stop_async_iteration: The asynchronous iteration protocol uses StopAsyncIteration to terminate async for. It is
+  the expected end signal for __anext__ rather than necessarily an application bug.
+exception_group: ExceptionGroup carries multiple Exception instances with nested structure, often from concurrent
+  operations. except* can handle matching subgroups while leaving other exceptions intact.
+base_exception_group: BaseExceptionGroup can contain BaseException subclasses that are not ordinary Exception objects.
+  Handling must account for interruption and exit signals as well as regular errors.
+async_cancelled_error: In asyncio, cancellation propagates into a task at an await point. It is part of structured
+  task shutdown and should generally be allowed to propagate after cleanup.
+async_timeout_error: Async timeouts are enforced around awaited work. A deadline can cancel the inner task, and
+  the caller receives a timeout error when the operation does not finish in time.
+subprocess_called_process_error: subprocess.run(..., check=True) raises CalledProcessError when a process exits
+  with a nonzero return code. The exit status and captured stderr belong to the child executable, not to Python
+  itself.
+subprocess_timeout_expired: A subprocess timeout limits how long the parent waits for the child. A slow child may
+  still have produced partial output before the deadline or may require explicit cleanup.
+config_parser_error: ConfigParser reads INI-style sections and options. Malformed headers, duplicate entries and
+  interpolation rules can cause parsing or lookup failures.
+argparse_argument_error: argparse validates argument definitions and values while building or executing the parser.
+  Error details indicate whether the failure concerns parser configuration or supplied input.
+argparse_exit: argparse commonly calls parser.exit() after --help or invalid input, raising SystemExit. Exit code
+  0 normally represents help, while an argument error usually exits with code 2.
+dataclass_frozen_instance_error: A frozen dataclass installs methods that reject normal field assignment after construction.
+  It models immutable records rather than permitting in-place updates.
+pydantic_validation_error: Pydantic parses input against a field schema and applies type coercion and validators.
+  The error location identifies which field and constraint rejected the supplied value.
+pydantic_user_error: PydanticUserError indicates a model-definition or API-usage problem, rather than a rejected
+  input value. Framework version changes can alter supported configuration and validator signatures.
+django_template_does_not_exist: Django resolves template names through configured engines, directories and installed
+  application template loaders. The template path must match one of these configured search locations.
+django_object_does_not_exist: Django's ORM raises model-specific DoesNotExist for lookups that require one object.
+  An empty queryset is not the same as a successful lookup with a null field.
+django_model_does_not_exist: Model.objects.get() expects exactly one matching row. If no row satisfies the query,
+  Django raises that model's DoesNotExist subclass instead of returning None.
+django_multiple_objects_returned: Model.objects.get() enforces a single-result contract. When multiple database
+  rows match, Django raises MultipleObjectsReturned rather than silently choosing one.
+django_integrity_error: Django passes SQL writes to the database driver. Uniqueness, foreign-key and other constraints
+  are enforced by the database engine and surfaced as IntegrityError.
+sqlalchemy_integrity_error: SQLAlchemy reports constraint failures from the database driver. The original DBAPI
+  error normally identifies the constraint, key or table rejected by the database.
+sqlalchemy_programming_error: SQLAlchemy sends SQL to a database dialect and driver. ProgrammingError commonly means
+  the statement refers to an invalid column, table or SQL construct for the actual database schema.
+sqlalchemy_no_result_found: Methods such as one() assert that a query must return exactly one row. When the result
+  set is empty, SQLAlchemy raises NoResultFound instead of returning None.
+sqlalchemy_multiple_results_found: Methods such as one() enforce result cardinality. MultipleResultsFound means
+  the query matched more than one row even though exactly one was requested.
+requests_connection_error: requests uses urllib3 and lower-level sockets to establish HTTP connections. A connection
+  failure occurs before a valid HTTP status code is received, so response-based error handling may not apply.
+requests_timeout: requests distinguishes connect and read timeouts. The former concerns establishing the connection;
+  the latter concerns waiting for bytes after a connection has been made.
+requests_http_error: requests raises HTTPError when raise_for_status() sees an unsuccessful HTTP response. A valid
+  response object exists; its status, headers and body help identify the server-side reason.
+urllib_url_error: urllib raises URLError for transport-level failures such as unreachable hosts, invalid DNS or
+  TLS errors. The reason attribute often contains the lower-level network exception.
+urllib_http_error: urllib's HTTPError includes both error behavior and HTTP response details. Unlike URLError caused
+  by a transport failure, it means a server answered with an unsuccessful status.
+numpy_axis_error: NumPy operations count axes from zero up to ndim - 1 (with supported negative indices). Referring
+  to an axis outside that range cannot match the array's shape.
+pandas_key_error: Pandas uses labeled indexes for columns and rows. A label lookup depends on exact column names
+  and index levels, not on the visual position of the value.
+pandas_parser_error: CSV and similar parsers infer row structure from separators, quoting rules and encodings. A
+  mismatched delimiter or unescaped quote can cause one row to have a different field count.
+pytest_failed_assertion: pytest rewrites assertions to show compared expressions and values. A failed assertion
+  is a mismatch between test expectations and observed behavior, not necessarily a framework failure.
+pytest_skipped: pytest may skip tests explicitly through pytest.skip(), decorators or condition markers. The test
+  did not fail; its body may not have executed at all.
+click_exception: Click handles CLI parameters and can raise ClickException for command failures. Its formatted error
+  message is usually more important than a generic Python stack frame.
+typer_bad_parameter: Typer builds CLI parsing on top of Click. A BadParameter reflects failure to convert or validate
+  an argument against the declared parameter type or callback.
+flask_bad_request: Werkzeug raises BadRequest for malformed or missing HTTP request data. Accessors like request.form[key]
+  may fail when a required key is absent rather than returning None.
+jwt_decode_error: JWT consists of encoded segments separated by dots. Decoding failures may involve invalid base64url,
+  malformed JSON, an unsupported algorithm or failed signature verification.
+jwt_expired_signature: JWT expiration is evaluated using the exp claim as a timestamp. A validly signed token can
+  still be rejected when its expiry time has passed.
+yaml_error: YAML uses indentation and context-sensitive punctuation to represent mappings and sequences. Parser
+  errors often point near a malformed mapping key, scalar or indentation transition.
+toml_decode_error: TOML has strict syntax for keys, quoted strings and table headers. A malformed entry makes the
+  configuration invalid even if adjacent lines look like Python or INI.
+importlib_metadata_package_not_found: importlib.metadata looks for installed distribution metadata, not just importable
+  module files. A local module may import successfully while distribution(name) still raises PackageNotFoundError.
+django_improperly_configured: Django checks critical settings at startup and when accessing configured services.
+  Missing environment variables, application entries or conflicting settings can cause ImproperlyConfigured.
+django_no_reverse_match: URL reversing maps a route name and supplied arguments back to a URL path. Missing namespaces,
+  incorrect names or arguments that do not match the pattern cause NoReverseMatch.
+fastapi_response_validation_error: FastAPI validates returned endpoint data against response_model after the handler
+  finishes. The endpoint may run without raising, but serialization can fail when required response fields are missing
+  or incompatible.
+sqlalchemy_operational_error: SQLAlchemy wraps DBAPI errors for connection and execution problems. OperationalError
+  can indicate network and authentication issues, unavailable database services or driver-level operation failures.
+django_command_error: Django management commands can raise CommandError for invalid inputs or unmet project requirements.
+  Its text identifies which command-level check failed instead of indicating a generic Python syntax error.
+alembic_command_error: Alembic manages migration revision graphs and database state. CommandError occurs when a
+  requested revision, migration configuration or dependency chain cannot be resolved.
+pytest_fixture_lookup_error: pytest resolves fixtures by name from the test module, conftest.py and registered plugins.
+  A missing fixture means none of the visible providers defines the requested name.
+aiogram_telegram_bad_request: aiogram forwards Telegram API requests and raises TelegramBadRequest on HTTP API validation
+  failures. The Telegram error description usually names an invalid chat, message or parameter.
+pytelegrambotapi_api_exception: pyTelegramBotAPI wraps unsuccessful Telegram API responses in ApiTelegramException.
+  Its status code and API description specify why the request was rejected.

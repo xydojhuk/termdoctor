@@ -48,7 +48,7 @@ diagnosis:
   unknown_rule_title: "Подробное правило не найдено"
   unknown_rule: "TermDoctor обнаружил ошибку Python, но подробного правила для неё пока нет.\n\nНовое правило можно добавить в файл:\nsrc/termdoctor/engines/python/rules.yml"
   no_error_title: "Ошибка Python не обнаружена"
-  no_error: "TermDoctor не смог распознать traceback Python или известную строку ошибки.\n\nВ версии 0.3.1 стабильным является движок Python."
+  no_error: "TermDoctor не смог распознать traceback Python или известную строку ошибки.\n\nПоддерживается диагностика ошибок Python."
   input_preview: "Предпросмотр входных данных"
 framework:
   title: "Контекст фреймворка"
@@ -215,3 +215,17 @@ config:
 errors:
   unsupported_language: "Язык '{language}' не поддерживается. Доступные языки: {supported}."
   unsupported_engine: "Неизвестный движок языка программирования: {engine}."
+
+education:
+  beginner_what: "ЧТО СЛУЧИЛОСЬ?"
+  beginner_where: "ГДЕ ИСКАТЬ?"
+  beginner_hint: "ПОДУМАЙ НАД ЭТИМ"
+  standard_what: "ЧТО ПРОИЗОШЛО?"
+  standard_mechanism: "КАК ЭТО РАБОТАЕТ"
+  location_hint: "Посмотри код в {location} и несколько строк выше."
+  location_unknown: "Найди последнюю строку из своего проекта в traceback."
+
+settings:
+  language: "Язык"
+  history: "История"
+  mode: "Режим объяснения"
