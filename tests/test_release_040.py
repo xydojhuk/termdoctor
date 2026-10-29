@@ -20,7 +20,8 @@ runner = CliRunner()
 def sandbox_env(tmp_path: Path) -> dict[str, str]:
     env = os.environ.copy()
     env.update({"HOME": str(tmp_path), "USERPROFILE": str(tmp_path),
-                "PYTHONPATH": str(ROOT / "src"), "TERMDOCTOR_LANG": "en"})
+                "PYTHONPATH": str(ROOT / "src"), "TERMDOCTOR_LANG": "en",
+                "TERMDOCTOR_MODE": "standard"})
     return env
 
 

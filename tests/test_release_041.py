@@ -138,14 +138,14 @@ def test_ukrainian_beginner_cli_and_standard_json(tmp_path):
     script.write_text("print(username)\n", encoding="utf-8")
     env = _env(tmp_path, language="uk")
     beginner = subprocess.run([sys.executable, "-m", "termdoctor", "--mode", "beginner", str(script)],
-                             text=True, capture_output=True, env=env, timeout=15)
+                             text=True, encoding="utf-8", capture_output=True, env=env, timeout=15)
     assert beginner.returncode == 1
     assert "ЩО СТАЛОСЯ?" in beginner.stdout
     assert "ПОМІРКУЙ НАД ЦИМ" in beginner.stdout
     assert "Що перевірити" not in beginner.stdout
     assert "TermDoctor v0.4.1" in beginner.stdout
     standard = subprocess.run([sys.executable, "-m", "termdoctor", "--mode", "standard", "run", "--format", "json", "--", sys.executable, str(script)],
-                             text=True, capture_output=True, env=env, timeout=15)
+                             text=True, encoding="utf-8", capture_output=True, env=env, timeout=15)
     assert standard.returncode == 1
     payload = json.loads(standard.stdout)
     assert payload["diagnosis"]["interface_locale"] == "uk"
@@ -159,9 +159,36 @@ def test_beginner_json_does_not_provide_direct_solutions(tmp_path):
     traceback.write_text('Traceback (most recent call last):\n  File "main.py", line 3, in <module>\n    print(username)\nNameError: name \'username\' is not defined\n')
     env = _env(tmp_path, language="en")
     out = subprocess.run([sys.executable, "-m", "termdoctor", "--mode", "beginner", "explain", str(traceback), "--format", "json"],
-                         env=env, capture_output=True, text=True, timeout=15)
+                         env=env, capture_output=True, text=True, encoding="utf-8", timeout=15)
     assert out.returncode == 0
     diagnosis = json.loads(out.stdout)
     assert diagnosis["explanation_mode"] == "beginner"
     assert diagnosis["rule"]["suggestions"] == []
     assert diagnosis["rule"]["possible_causes"] == []
+
+
+def test_explicit_standard_mode_overrides_saved_beginner_mode(tmp_path):
+    traceback = tmp_path / "error.txt"
+    traceback.write_text(
+        'Traceback (most recent call last):\n'
+        '  File "main.py", line 1, in <module>\n'
+        '    print(username)\n'
+        "NameError: name 'username' is not defined\n",
+        encoding="utf-8",
+    )
+
+    assert runner.invoke(app, ["set", "mode", "beginner"]).exit_code == 0
+
+    standard = runner.invoke(
+        app, ["--mode", "standard", "explain", str(traceback), "--format", "json"]
+    )
+    assert standard.exit_code == 0
+    standard_data = json.loads(standard.output)
+    assert standard_data["explanation_mode"] == "standard"
+    assert standard_data["rule"]["suggestions"]
+
+    beginner = runner.invoke(app, ["explain", str(traceback), "--format", "json"])
+    assert beginner.exit_code == 0
+    beginner_data = json.loads(beginner.output)
+    assert beginner_data["explanation_mode"] == "beginner"
+    assert beginner_data["rule"]["suggestions"] == []
